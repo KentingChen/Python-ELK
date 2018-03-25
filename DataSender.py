@@ -35,7 +35,7 @@ def Packer(randomIsON=True):
 # Sending data to Logstash via TCP
 def send(tHost, tPort, messageToSend):
     
-    # with socket.socket(socket.AF_INET, socket.SOCK_GRAM) as s:   # UDP
+    # with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:   # UDP
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((tHost, int(tPort)))
         s.sendall(str.encode(messageToSend))
