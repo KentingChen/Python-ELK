@@ -30,10 +30,10 @@ def Packer(randomIsON=True):
             'SystemID':'02x3'
         }
 
-    return json.dumps(message,ensure_ascii=False)     # return a json Object.
+    return json.dumps(message,ensure_ascii=False) + "\n"     # return a json Object. Add '\n' to let logstash get message.
 
 # Sending data to Logstash via TCP
-def send(tHost, tPort, messageToSend):
+def sendMSG(tHost, tPort, messageToSend):
     
     # with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:   # UDP
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -62,7 +62,7 @@ def main():
     for i in range(res.repeat):
         res.count = count
         while res.count > 0:
-            send(res.ls_host, res.ls_port, Packer())
+            sendMSG(res.ls_host, res.ls_port, Packer())
             res.count -= 1
         if res.interval is not None:
             time.sleep(res.interval)
